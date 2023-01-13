@@ -12,6 +12,7 @@ public class J12_UserRepository {
 		extendArrayOne();
 		userTable[userTable.length - 1] = user; // 유저를 담는다.
 	}
+
 	public J12_User[] getUserTable() {
 		return userTable;
 	}
@@ -33,5 +34,19 @@ public class J12_UserRepository {
 			newArray[i] = oldArray[i];
 		}
 	}
-	
+
+	public J12_User findUserByUsername(String username) {
+		J12_User user = null;
+		
+		for (J12_User u : userTable) {
+			if (u == null) {
+				continue;
+			}
+			if (u.getUsername().equals(username)) {
+				user = u;
+				break;
+			}
+		}
+		return user;
+	}
 }

@@ -1,5 +1,7 @@
 package j01_출력;
 
+import J17_스태틱.싱글톤.KIA;
+
 public class HelloJava { // 클래스는 대문자로 시작한다. 변수명과 겹치기 때문이다.
 
 	// 주석 : 코드 내부에 메모를 할 때 사용한다. 컴파일 시에 무시된다.
@@ -22,6 +24,10 @@ public class HelloJava { // 클래스는 대문자로 시작한다. 변수명과
 		System.out.println("주소 : 부산 동래구 사직동");
 		System.out.print("연락처 : 010-9988-1916");
 		System.out.print("수업 : AWS 기반 공공빅데이터 활용 웹개발자 양성");
+		
+		System.out.println();
+		
+		KIA.getInstance().printCompanyName();
 	}
 
 }
