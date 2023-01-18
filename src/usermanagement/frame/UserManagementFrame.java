@@ -115,6 +115,18 @@ public class UserManagementFrame extends JFrame {
 		loginButton.addMouseListener(new MouseAdapter() {
 			@Override // 익명클래스
 			public void mouseClicked(MouseEvent e) {
+				JsonObject loginUser = new JsonObject();
+				loginUser.addProperty("usernameAndEmail", usernameField.getText());
+				loginUser.addProperty("password", passwordField.getText());
+
+				UserService userService = UserService.getInstance();
+
+				Map<String, String> response = userService.authorize(loginUser.toString());
+
+				if (response.containsKey("error")) {
+					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 
 			}
 		});
@@ -222,7 +234,7 @@ public class UserManagementFrame extends JFrame {
 		registerEmailField.setBounds(12, 380, 360, 31);
 		registerPanel.add(registerEmailField);
 
-		JButton registerButton = new JButton("Register"); // 마우스 클릭시 행동
+		JButton registerButton = new JButton("Register"); // 마우스 클릭시 행동 , textfield
 		registerButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
