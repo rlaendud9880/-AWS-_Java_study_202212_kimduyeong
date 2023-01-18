@@ -59,12 +59,11 @@ public class UserService {
 			response.put("error", "이미 가입된 이메일입니다.");
 			return response;
 		}
-		
+
 		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 		System.out.println("암호화 후");
 		System.out.println(user);
 
-		
 		userRepository.saveUser(user);
 
 		response.put("OK", "회원가입 성공");
@@ -78,5 +77,36 @@ public class UserService {
 
 	private boolean duplicatedEmail(String email) {
 		return userRepository.findUserByEmail(email) != null;
+	}
+
+	public Map<String, String> authorize(String loginUserJson) {
+		Map<String, String> loginUser = gson.fromJson(loginUserJson, Map.class);
+
+		Map<String, String> response = new HashMap<>();
+
+		for (Entry<String, String> entry : loginUser.entrySet()) {
+			if (entry.getValue().isBlank()) {
+				response.put("error", entry.getKey() + "은(는) 공백일 수 없습니다.");
+				return response;
+			}
+		}
+
+		String usernameAndEmail = loginUser.get("usernameAndEmail");
+
+		User user = userRepository.findUserByEmail(loginUser.get("usernameAndEamil"));
+		if (user == null) {
+			user = userRepository.findUserByEmail("usernameAndEmail");
+			if (user == null) {
+				response.put("error", "사용자 정보를 확인해주세요.");
+				return response;
+			}
+		}
+		if(!BCrypt.checkpw(loginUser.get("password"), user.getPassword())) {
+			response.put("error", "사용자 정보를 확인해주세요.");
+			return response;
+		}
+		
+		response.put("ok", user.getName() + "님 환영합니다.");
+		return response;
 	}
 }
