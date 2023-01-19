@@ -93,10 +93,10 @@ public class UserService {
 
 		String usernameAndEmail = loginUser.get("usernameAndEmail");
 
-		User user = userRepository.findUserByEmail(loginUser.get("usernameAndEamil"));
-		if (user == null) {
-			user = userRepository.findUserByEmail("usernameAndEmail");
-			if (user == null) {
+		User user = userRepository.findUserByUsername(usernameAndEmail);
+		if(user == null) {
+			user = userRepository.findUserByEmail(usernameAndEmail);
+			if(user == null) {
 				response.put("error", "사용자 정보를 확인해주세요.");
 				return response;
 			}

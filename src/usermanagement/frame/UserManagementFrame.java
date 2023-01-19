@@ -127,7 +127,7 @@ public class UserManagementFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
+				JOptionPane.showMessageDialog(null, response.get("ok"), "ok", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
