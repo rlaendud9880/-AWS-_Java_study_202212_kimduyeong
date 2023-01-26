@@ -16,7 +16,7 @@ public class UserInsert {
 	private DBConnectionMgr pool;
 
 	public UserInsert() {
-		pool = DBConnectionMgr.getInstance();
+		pool = DBConnectionMgr.getInstance(); // 싱글톤
 	}
 
 	public int saveUser(User user) {
@@ -31,9 +31,11 @@ public class UserInsert {
 		try { // 예외처리
 			connection = pool.getConnection();
 
-			sql = "insert into user_mst\r\n" + "value (0, ?, ?, ?, ?)";
+			sql = "insert into user_mst\r\n" 
+					+ "value (0, ?, ?, ?, ?)";
 
 			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			
 			preparedStatement.setString(1, user.getUsername());
 			preparedStatement.setString(2, user.getPassword());
 			preparedStatement.setString(3, user.getName());
@@ -41,9 +43,9 @@ public class UserInsert {
 
 			successCount = preparedStatement.executeUpdate(); // insert, update, delete 명령 실행할 떄 사용한다.
 
-			resultSet = preparedStatement.getGeneratedKeys();
+			resultSet = preparedStatement.getGeneratedKeys(); //
 			if (resultSet.next()) {
-				System.out.println("이번에 만들어진 user_id key값: " + resultSet.getInt(1));
+				System.out.println("이번에 만들어진 user_id key값: " + resultSet.getInt(1)); // 1은 열의 위치
 				user.setUserId(resultSet.getInt(1));
 
 			}
