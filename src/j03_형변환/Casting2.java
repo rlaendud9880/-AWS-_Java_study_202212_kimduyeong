@@ -1,4 +1,4 @@
-package j03_항변항;
+package j03_형변환;
 
 public class Casting2 {
 
